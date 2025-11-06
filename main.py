@@ -5,11 +5,30 @@ from datetime import datetime, timedelta
 # TODO: Create a function to view all books that are currently available
 # Output should include book ID, title, and author
 
+def view_available(books):
+    for book in library_books:
+        if book["available"]:
+            print(book["id"], "-", book["title"], "by", book["author"])
+
+# view_available(library_books) <-- testing line. uncomment it to test level 1.
 
 # -------- Level 2 --------
 # TODO: Create a function to search books by author OR genre
 # Search should be case-insensitive
 # Return a list of matching books
+
+def search(books, term):
+    term = term.lower()
+    results = []
+    for book in books:
+        if term in book["author"].lower() or term in book ["genre"].lower():
+            results.append(book)
+        return results
+
+ matches = search(library_books, "fantasy")
+for m in matches
+    print(m["title"])
+
 
 
 # -------- Level 3 --------
