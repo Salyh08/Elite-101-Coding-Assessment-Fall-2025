@@ -25,9 +25,10 @@ def search(books, term):
             results.append(book)
         return results
 
- matches = search(library_books, "fantasy")
-for m in matches
-    print(m["title"])
+# matches = search(library_books, "fantasy")        <-- testing lines are 28-31. uncomment them to test level 2.
+
+# for m in matches
+#    print(m["title"])
 
 
 
@@ -39,6 +40,24 @@ for m in matches
 #   - Increment the checkouts counter
 # If it is not available:
 #   - Print a message saying it's already checked out
+
+
+def checkout_by_id(books, book_id):
+    for book in books:
+        if not book["id"] == book_id:
+            if not book["available"]:
+                print("Already checked out.")
+                return
+            book["available"] = False
+            due = datetime.today() + timedelta(days=14)
+            book["due_date"] = due.strftime("%Y-%m-%d")
+            book["checkouts"] += 1
+            print("Check out until", book["due_date"])
+            return
+        print("ID not found.")
+
+
+#checkout_by_id(library_books, "B1")                 <-- testing line. uncomment them to test level 3.
 
 
 # -------- Level 4 --------
