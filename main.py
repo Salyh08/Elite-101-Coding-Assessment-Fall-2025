@@ -10,7 +10,7 @@ def view_available(books):
         if book["available"]:
             print(book["id"], "-", book["title"], "by", book["author"])
 
-# view_available(library_books) <-- testing line. uncomment it to test level 1.
+# view_available(library_books) <-- testing line. uncomment it to test level 1. 
 
 # -------- Level 2 --------
 # TODO: Create a function to search books by author OR genre
@@ -67,6 +67,38 @@ def checkout_by_id(books, book_id):
 # TODO: Create a function to list all overdue books
 # A book is overdue if its due_date is before today AND it is still checked out
 
+def return_book(book):
+    for data in lB.books_list:
+        if book.lower() == data.title.lower():
+            if data.available == False:
+                due = data.due_date
+                due_day = due.split("-")
+                today = date.today()
+                if due_day [2] < str(today.day):
+                    print(f"\n{data.title} was returned past the due date.\n")
+                    data.available = True
+                    data.due_date = None
+                elif due_day[2] >= str(today.day):
+                    print(f"\n{data.title} was returned before the due date.\n")
+                    data.available = True
+                    data.due_date = None
+            
+            elif data.available == True: 
+                print("This library already has a copy of this book")
+                pass
+
+
+def check_overdues():
+    for data in lB.books_list:
+        if data.available == False:
+            due = data.due_date
+            due_day = due.split("-")
+            today = date.today() 
+            
+            if due_day[2] < str(today.day):
+                print(f"{data.title} is overdue")
+        else:
+            pass
 
 # -------- Level 5 --------
 # TODO: Convert your data into a Book class with methods like checkout() and return_book()
@@ -80,6 +112,31 @@ def checkout_by_id(books, book_id):
 # - Save/load catalog to file (CSV or JSON)
 # - Anything else you want to build on top of the system!
 
-if __name__ == "__main__":
-    # You can use this space to test your functions
-    pass
+while status == True:
+
+    choice = input(f"\nHello {user}, how could I help you today?\n\n1.) Print all available books\n2.) Find specific book through Author/Genre\n3.) Checkout a book\n4.) Return a book\n5.) Check for all overdue books\n6.) Exit\n\n")
+    
+    if choice == "1":
+        find_available_books()
+    
+    if choice == "2":
+        search_word = input("\nWhat is the Author/Genre of the book you're searching for?\n\n")
+        book_find(search_word)
+    
+    if choice == "3":
+        
+        book = input("\nWhat is the title of the book?\n\n")
+        checkout(book)
+
+    if choice == "4":
+        
+        book = input("\nWhat is the title of the book you'd like to return\n\n")
+        return_book(book)
+
+    if choice == "5":
+        check_overdues()
+
+
+    if choice == "6":
+        print("\nHave a good rest of your day!")
+        status = False
